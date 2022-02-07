@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {% include 'components/admin/header.html' %}
+
+  <!-- =======================================================
+  * Template Name: NiceAdmin - v2.2.0
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+  <title>User Management - Tanamanku</title>
+</head>
+
+<body>
+
+  {% include 'components/admin/navbar.html' %}
+  {% from 'components/admin/sidebar.html' import sidebar  %}
+  {{ sidebar('user') }}
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Dashboard</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{{ url_for('admin.user_management') }}">User Management</a></li>
+          <li class="breadcrumb-item active">User</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+    {% include 'components/alert.html' %}
+
+    <section class="section dashboard">
+      <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link {{ 'active' if tab == 'user' }}" id="pills-user-tab" data-bs-toggle="pill"
+            data-bs-target="#pills-user" type="button" role="tab" aria-controls="pills-user"
+            aria-selected="true">User</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link {{ 'active' if tab == 'role' }}" id="pills-role-tab" data-bs-toggle="pill"
+            data-bs-target="#pills-role" type="button" role="tab" aria-controls="pills-role"
+            aria-selected="false">Role</button>
+        </li>
+      </ul>
+      <div class="tab-content" id="pills-tabContent">
+        <div class="tab-pane fade {{ 'show active' if tab == 'user' }}" id="pills-user" role="tabpanel"
+          aria-labelledby="pills-user-tab">
+          <section class="section">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <h5 class="card-title">User</h5>
+                      <a href="{{ url_for('admin.create_user') }}" class="btn btn-primary">Create New User</a>
+                    </div>
+                    <!-- Table with stripped rows -->
+                    <table class="table datatable">
+                      <thead>
+                        <tr>
+                          <th scope="col">#</th>
+                          <th scope="col">Username</th>
+                          <th scope="col">Email</th>
+                          <th scope="col">Role</th>
+                          <th scope="col">Last Updated</th>
+                          <th scope="col">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for user in users  %}
+                        <tr>
+                          <th scope="row">{{ loop.index }}</th>
+                          <td>{{ user.username }}</td>
+                          <td>{{ user.email }}</td>
+                          <td>{{ user.role.name }}</td>
+                          <td>{{ user.updated_at }}</td>
+                          <td>
+                            <a href="{{ url_for('admin.user_detail', id=user.id) }}" class="btn btn-info">
+                              <i class="bi bi-info-circle"></i>
+                            </a>
+                            <a href="{{ url_for('admin.edit_user', id=user.id) }}" class="btn btn-warning">
+                              <i class="bi bi-pen"></i>
+                            </a>
+                            <a href="#" class="btn btn-danger" data-bs-toggle="modal"
+                              data-bs-target="#delete-user-sheet"
+                              data-bs-action="{{ url_for('admin.delete_user', id=user.id) }}">
+                              <i class="bi bi-trash"></i>
+                            </a>
+
+                          </td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                    <!-- End Table with stripped rows -->
+
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </section>
+
+
+        </div>
+        <div class="tab-pane fade {{ 'show active' if tab == 'role' }}" id="pills-role" role="tabpanel"
+          aria-labelledby="pills-user-tab">
+
+          <section class="section">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <h5 class="card-title">Role</h5>
+                      <a href="{{ url_for('admin.create_role') }}" class="btn btn-primary">Create New Role</a>
+                    </div>
+                    <!-- Table with stripped rows -->
+                    <table class="table datatable">
+                      <thead>
+                        <tr>
+                          <th scope="col">#</th>
+                          <th scope="col">Role</th>
+                          <th scope="col">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for role in roles  %}
+                        <tr>
+                          <th scope="row">{{ loop.index }}</th>
+                          <td>{{ role.name }}</td>
+                          <td>
+                            <a href="{{ url_for('admin.role_detail', id=role.id) }}" class="btn btn-info">
+                              <i class="bi bi-info-circle"></i>
+                            </a>
+                            {% if role.name != 'Admin' and role.name != 'User' %}
+                            <a href="{{ url_for('admin.edit_role', id=role.id) }}" class="btn btn-warning">
+                              <i class="bi bi-pen"></i>
+                            </a>
+                            <a href="#" class="btn btn-danger" data-bs-toggle="modal"
+                              data-bs-target="#delete-role-sheet"
+                              data-bs-action="{{ url_for('admin.delete_role', id=role.id) }}">
+                              <i class="bi bi-trash"></i>
+                            </a>
+                            {% endif %}
+                          </td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                    <!-- End Table with stripped rows -->
+
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+
+  {% include 'components/admin/footer.html' %}
+
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+
+  {% include 'components/admin/scripts.html' %}
+  {% include 'components/admin/delete-user-modal.html' %}
+  {% include 'components/admin/delete-role-modal.html' %}
+</body>
+
+</html>

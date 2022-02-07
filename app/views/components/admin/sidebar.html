@@ -1,0 +1,41 @@
+{% macro sidebar(name) %}
+<!-- ======= Sidebar ======= -->
+<aside id="sidebar" class="sidebar">
+
+  <ul class="sidebar-nav" id="sidebar-nav">
+
+    <li class="nav-item">
+      <a class="nav-link {{ 'collapsed' if name != 'dashboard' }}" href="{{ url_for('admin.dashboard') }}">
+        <i class="bi bi-grid"></i>
+        <span>Dashboard</span>
+      </a>
+    </li><!-- End Dashboard Nav -->
+
+    <li class="nav-item">
+      <a class="nav-link {{ 'collapsed' if name != 'user' }}" href="{{ url_for('admin.user_management') }}">
+        <i class="bi bi-person"></i>
+        <span>User Management</span>
+      </a>
+    </li><!-- End User Management Nav -->
+
+
+    <li class="nav-item">
+      <a class="nav-link {{ 'collapsed' if name != 'plant' }}" href="{{ url_for('admin.plant_management') }}">
+        <i class="bi bi-tree"></i>
+        <span>Plant Management</span>
+      </a>
+    </li><!-- End Plant Nav -->
+
+
+    <li class="nav-item">
+      <a class="nav-link {{ 'collapsed' if name != 'blog' }}" href="{{ url_for('admin.blog_management') }}">
+        <i class="bi bi-journal-bookmark"></i>
+        <span>Blog Management</span>
+      </a>
+    </li><!-- End Plant Nav -->
+
+
+  </ul>
+
+</aside><!-- End Sidebar-->
+{% endmacro %}

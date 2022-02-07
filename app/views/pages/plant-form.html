@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {% include 'components/admin/header.html' %}
+
+  <!-- =======================================================
+  * Template Name: NiceAdmin - v2.2.0
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+  <title>Tanamanku - {{ operation }} Plant</title>
+</head>
+
+<body>
+
+  {% include 'components/admin/navbar.html' %}
+  {% from 'components/admin/sidebar.html' import sidebar  %}
+  {{ sidebar('plant') }}
+  <main id="main" class="main">
+    <div class="pagetitle">
+      <h1>Dashboard</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{{ url_for('admin.plant_management') }}">Plant Management</a></li>
+          <li class="breadcrumb-item"><a href="{{ url_for('admin.plant_management') }}">Plant</a></li>
+          <li class="breadcrumb-item active">{{ operation }}</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+    {% include 'components/alert.html' %}
+    {% include 'components/form-errors.html' %}
+    <section class="section dashboard">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{ operation }} Plant</h5>
+
+          <div class="text-center">
+            <img id="plant-preview" class="rounded center-block mb-5 w-50"
+              src=" {{ url_for('static', filename='uploads/' + image_url ) if image_url }}" alt="Plant Image Preview">
+          </div>
+          <form action="{{ action }}" method="POST" enctype="multipart/form-data">
+            {% for field in form %}
+            <div class="mb-3">
+              {% if field.type == 'BooleanField' %}
+              {{ field(class_='form-check-input') }}
+              {{ field.label(class_='form-check-label') }}
+              {% elif field.type == 'CSRFTokenField' %}
+              {{ field() }}
+              {% elif field.type == 'FileField' %}
+              {{ field.label(class_='form-label') }}
+              {{ field(class_='form-control') }}
+              {% elif field.type == 'SubmitField' %}
+              {{ field(class_='btn btn-block btn-primary') }}
+              {% else %}
+              <div class="form-floating">
+                {{ field(class_='form-control') }}
+                {{ field.label() }}
+              </div>
+              {% endif %}
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-block btn-primary">{{ operation }} Plant</button>
+          </form>
+
+        </div>
+
+
+      </div>
+
+    </section>
+
+  </main><!-- End #main -->
+
+  {% include 'components/admin/footer.html' %}
+
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+
+  {% include 'components/admin/scripts.html' %}
+
+  <script defer>
+    document.addEventListener('DOMContentLoaded', function () {
+      var plantImage = document.getElementById('plantImage');
+      var plantPreview = document.getElementById('plant-preview');
+      plantImage.onchange = function (event) {
+        const [file] = plantImage.files
+        if (file) {
+          plantPreview.src = URL.createObjectURL(file);
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

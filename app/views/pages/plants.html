@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {% include 'components/client/header.html' %}
+  <title>Tanamanku - Blog</title>
+
+  <!-- =======================================================
+  * Template Name: Green - v4.7.0
+  * Template URL: https://bootstrapmade.com/green-free-one-page-bootstrap-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+  {% include 'components/client/navbar.html' %}
+
+  <main id="main">
+
+    <div class="container my-5">
+      <h1 class="display-6 mb-4 mt-5 pt-4">Plants</h1>
+
+      {% for plant in plants %}
+
+      <div class="card p-4 mb-3">
+
+        <div class="d-flex">
+
+          <img id="plant-preview" class="rounded center-block mb-5 w-50"
+            src=" {{ url_for('static', filename='uploads/' + plant.picture_url ) if plant.picture_url }}"
+            alt="Plant Image Preview" />
+          <div class="right">
+            <div class="d-flex flex-wrap ms-3">
+              <h3 class="card-title">
+                <a href="{{ url_for('base.plant', slug=plant.slug) }}" class="text-decoration-none">
+                  {{ plant.name }}
+                </a>
+              </h3>
+            </div>
+
+            <div class="d-flex">
+              <div class="d-flex flex-column"></div>
+              <div class="ms-3">
+                <div class="media-body ml-3">
+                </div>
+              </div>
+            </div>
+            <div class="card-body row">
+              <p> {{ plant.description | safe }} </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      {% endfor %}
+
+    </div>
+
+  </main><!-- End #main -->
+
+  {% include 'components/client/footer.html' %}
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+
+  {% include 'components/client/scripts.html' %}
+</body>
+
+</html>

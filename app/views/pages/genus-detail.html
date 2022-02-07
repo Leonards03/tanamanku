@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {% include 'components/admin/header.html' %}
+
+  <!-- =======================================================
+  * Template Name: NiceAdmin - v2.2.0
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+  <title>Tanamanku - Genus Detail</title>
+</head>
+
+<body>
+
+  {% include 'components/admin/navbar.html' %}
+  {% from 'components/admin/sidebar.html' import sidebar  %}
+  {{ sidebar('plant') }}
+  <main id="main" class="main">
+    <div class="pagetitle">
+      <h1>Dashboard</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{{ url_for('admin.plant_management') }}">Plant Management</a></li>
+          <li class="breadcrumb-item"><a href="{{ url_for('admin.plant_management') }}">Genus</a></li>
+          <li class="breadcrumb-item active">Detail</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+    {% include 'components/alert.html' %}
+    <section class="section dashboard">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Genus Detail</h5>
+
+          <div class="d-flex justify-content-between mt-4">
+            <h1 class="mb-3">{{ genus.name }}</h1>
+          </div>
+          <div>
+            <dl class="row">
+              <dt class="col-sm-2">Description</dt>
+              <dd class="col-sm-9">{{ genus.description | safe }}</dd>
+            </dl>
+          </div>
+        </div>
+
+
+      </div>
+
+    </section>
+
+  </main><!-- End #main -->
+
+  {% include 'components/admin/footer.html' %}
+
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+
+  {% include 'components/admin/scripts.html' %}
+</body>
+
+</html>

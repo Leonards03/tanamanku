@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {% include 'components/admin/header.html' %}
+
+  <!-- =======================================================
+  * Template Name: NiceAdmin - v2.2.0
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+  <title>Plant Manager - Tanamanku</title>
+</head>
+
+<body>
+
+  {% include 'components/admin/navbar.html' %}
+  {% from 'components/admin/sidebar.html' import sidebar  %}
+  {{ sidebar('') }}
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Dashboard</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{{ url_for('admin.user_management') }}">Plant Manager</a></li>
+          <li class="breadcrumb-item active">Plants</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+    {% include 'components/alert.html' %}
+    <section class="section profile">
+      <div class="row">
+        <div class="col-xl-4">
+
+          <div class="card">
+            <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+
+              <img src="{{ current_user.avatar_url }}" alt="Profile" class="rounded-circle">
+              <h2>{{ current_user.username }}</h2>
+              <h3>{{ current_user.role.name }}</h3>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-xl-8">
+
+          <div class="card">
+            <div class="card-body pt-3">
+              <!-- Bordered Tabs -->
+              <ul class="nav nav-tabs nav-tabs-bordered">
+
+                <li class="nav-item">
+                  <button class="nav-link active" data-bs-toggle="tab"
+                    data-bs-target="#profile-overview">Overview</button>
+                </li>
+
+                <li class="nav-item">
+                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
+                </li>
+
+                <li class="nav-item">
+                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change
+                    Password</button>
+                </li>
+
+              </ul>
+              <div class="tab-content pt-2">
+
+                <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                  <h5 class="card-title">Profile Details</h5>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label ">Name</div>
+                    <div class="col-lg-9 col-md-8">{{ current_user.name }}</div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Username</div>
+                    <div class="col-lg-9 col-md-8">{{ current_user.username }}</div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Email</div>
+                    <div class="col-lg-9 col-md-8">{{ current_user.email }}</div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Role</div>
+                    <div class="col-lg-9 col-md-8">{{ current_user.role.name }}</div>
+                  </div>
+
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Register Date</div>
+                    <div class="col-lg-9 col-md-8">{{ current_user.created_at }}</div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Profile Last Update</div>
+                    <div class="col-lg-9 col-md-8">{{ current_user.updated_at }}</div>
+                  </div>
+
+                </div>
+
+                <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+
+                  <!-- Profile Edit Form -->
+                  {% if edit_profile_form.errors %}
+                  {% for field_name, field_errors in form.errors|dictsort if field_errors %}
+                  {% for error in field_errors %}
+                  <div class="alert alert-danger" role="alert">
+                    {{ form[field_name].label }}: {{ error }}
+                  </div>
+                  {% endfor %}
+                  {% endfor %}
+                  {% endif %}
+                  <form method="POST" action="{{ url_for('profile.edit_profile', username=current_user.username) }}">
+                    {{ edit_profile_form.hidden_tag() }}
+                    <div class="row mb-3">
+                      <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
+                      <div class="col-md-8 col-lg-9">
+                        <img src="{{ current_user.avatar_url }}" alt="Profile" class="rounded-circle">
+                        <div class="pt-2">
+                          <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i
+                              class="bi bi-upload"></i></a>
+                          <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i
+                              class="bi bi-trash"></i></a>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      {{ edit_profile_form.name.label(class_='col-md-4 col-lg-3 col-form-label') }}
+                      <div class="col-md-8 col-lg-9">
+                        {{ edit_profile_form.name(class_='form-control') }}
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      {{ edit_profile_form.username.label(class_='col-md-4 col-lg-3 col-form-label') }}
+                      <div class="col-md-8 col-lg-9">
+                        <div class="input-group has-validation">
+                          <span class="input-group-text" id="inputGroupPrepend">@</span>
+                          {{ edit_profile_form.username(class_='form-control') }}
+                          <div class="invalid-feedback">Please enter your username.</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      {{ edit_profile_form.email.label(class_='col-md-4 col-lg-3 col-form-label') }}
+                      <div class="col-md-8 col-lg-9">
+                        {{ edit_profile_form.email(class_='form-control') }}
+                      </div>
+                    </div>
+
+                    <div class="text-center">
+                      <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                  </form><!-- End Profile Edit Form -->
+
+                </div>
+
+                <div class="tab-pane fade pt-3" id="profile-change-password">
+                  <!-- Change Password Form -->
+                  <form method="POST" action="{{ url_for('profile.change_password', username=current_user.username) }}">
+                    {{ change_password_form.hidden_tag() }}
+                    <div class="row mb-3">
+                      {{ change_password_form.password.label(class_='col-md-4 col-lg-3 col-form-label') }}
+                      <div class="col-md-8 col-lg-9">
+                        {{ change_password_form.password(class_='form-control') }}
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      {{ change_password_form.new_password.label(class_='col-md-4 col-lg-3 col-form-label') }}
+                      <div class="col-md-8 col-lg-9">
+                        {{ change_password_form.new_password(class_='form-control') }}
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      {{ change_password_form.confirm_new_password.label(class_='col-md-4 col-lg-3 col-form-label') }}
+                      <div class="col-md-8 col-lg-9">
+                        {{ change_password_form.confirm_new_password(class_='form-control') }}
+                      </div>
+                    </div>
+
+                    <div class="text-center">
+                      <button type="submit" class="btn btn-primary">Change Password</button>
+                    </div>
+                  </form><!-- End Change Password Form -->
+
+                </div>
+
+              </div><!-- End Bordered Tabs -->
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+
+  {% include 'components/admin/footer.html' %}
+
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+
+  {% include 'components/admin/scripts.html' %}
+</body>
+
+</html>

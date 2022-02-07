@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {% include 'components/admin/header.html' %}
+
+  <!-- =======================================================
+  * Template Name: NiceAdmin - v2.2.0
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+  <title>Tanamanku - Blog Detail</title>
+</head>
+
+<body>
+
+  {% include 'components/admin/navbar.html' %}
+  {% from 'components/admin/sidebar.html' import sidebar  %}
+  {{ sidebar('plant') }}
+  <main id="main" class="main">
+    <div class="pagetitle">
+      <h1>Dashboard</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{{ url_for('admin.blog_management') }}">Blog Management</a></li>
+          <li class="breadcrumb-item"><a href="{{ url_for('admin.blog_management') }}">Blog</a></li>
+          <li class="breadcrumb-item active">Detail</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+    {% include 'components/alert.html' %}
+    <section class="section dashboard">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Blog Detail</h5>
+
+          <div class="d-flex justify-content-between mt-4">
+            <h1 class="mb-3">{{ blog.title }}</h1>
+          </div>
+          <div class="d-flex flex-column mb-5">
+            <small>Posted on {{ blog.get_created_at() }}
+              {% if blog.tag != None  %}
+              {{ '·' }}
+              {% set tags = blog.tag.split(',')  %}
+              {% for tag in tags %}
+              <span class="badge bg-secondary">{{ tag }}</span>
+              {% endfor %}
+              {% endif %}
+            </small>
+          </div>
+          <div>
+            <dl class="row">
+              <dt class="col-sm-2">Content</dt>
+              <dd class="col-sm-9">{{ blog.content | safe }}</dd>
+            </dl>
+
+            <dl class="row">
+              <dt class="col-sm-2">Created at</dt>
+              <dd class="col-sm-9">{{ blog.created_at }}</dd>
+            </dl>
+
+            <dl class="row">
+              <dt class="col-sm-2">Last updated</dt>
+              <dd class="col-sm-9">{{ blog.updated_at }}</dd>
+            </dl>
+          </div>
+        </div>
+
+
+      </div>
+
+    </section>
+
+  </main><!-- End #main -->
+
+  {% include 'components/admin/footer.html' %}
+
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+
+  {% include 'components/admin/scripts.html' %}
+</body>
+
+</html>

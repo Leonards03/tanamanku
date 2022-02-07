@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {% include 'components/admin/header.html' %}
+
+  <!-- =======================================================
+  * Template Name: NiceAdmin - v2.2.0
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+  <title>Dashboard - Tanamanku</title>
+</head>
+
+<body>
+
+  {% include 'components/admin/navbar.html' %}
+  {% from 'components/admin/sidebar.html' import sidebar  %}
+  {{ sidebar('dashboard') }}
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Dashboard</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{{ url_for('admin.dashboard') }}">Home</a></li>
+          <li class="breadcrumb-item active">Dashboard</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+    {% include 'components/alert.html' %}
+
+    <section class="section dashboard">
+      <div class="row">
+
+        <!-- Left side columns -->
+        <div class="col-lg-12">
+          <div class="row">
+
+            <!-- Sales Card -->
+            <div class="col-xxl-4 col-md-6">
+              <div class="card info-card sales-card">
+
+                <div class="card-body">
+                  <h5 class="card-title">Users</h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-people-fill"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6>{{ user_count }}</h6>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div><!-- End Sales Card -->
+
+            <!-- Revenue Card -->
+            <div class="col-xxl-4 col-md-6">
+              <div class="card info-card revenue-card">
+
+                <div class="card-body">
+                  <h5 class="card-title">Plants</h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bx bxs-leaf"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6>{{ plant_count }}</h6>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div><!-- End Revenue Card -->
+
+
+
+            <!-- Recent Sales -->
+            <div class="col-12">
+              <div class="card recent-sales">
+
+
+                <div class="card-body">
+                  <h5 class="card-title">Blog </h5>
+
+                  <table class="table table-borderless datatable">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Tag</th>
+                        <th scope="col">Created At</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for blog in blogs  %}
+
+                      <tr>
+                        <th scope="row">{{ loop.index }}</th>
+                        <td>
+                          <a href="{{ url_for('admin.blog_detail', slug=blog.slug) }}">
+                            {{ blog.title }}
+                          </a>
+                        </td>
+                        <td>
+                          {% if blog.tag != None  %}
+                          {{ '·' }}
+                          {% set tags = blog.tag.split(',')  %}
+                          {% for tag in tags %}
+                          <span class="badge bg-secondary">{{ tag }}</span>
+                          {% endfor %}
+                          {% endif %}
+                        </td>
+                        <td>{{ blog.created_at }}</td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+
+                </div>
+
+              </div>
+            </div><!-- End Recent Sales -->
+
+            <!-- Top Selling -->
+            <div class="col-12">
+              <div class="card top-selling">
+
+                <div class="card-body pb-0">
+                  <h5 class="card-title">Plants</h5>
+
+                  <table class="table table-borderless">
+                    <thead>
+                      <tr>
+                        <th scope="col">Preview</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Species</th>
+                        <th scope="col">Genus</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for plant in plants %}
+                      <tr>
+                        <th scope="row">
+                          <a href="{{ url_for('admin.plant_detail', slug=plant.slug) }}">
+                            <img
+                              src="{{ url_for('static', filename='uploads/' + plant.picture_url ) if plant.picture_url }}"
+                              alt=""></a>
+                        </th>
+                        <td>
+                          <a href="{{ url_for('admin.plant_detail', slug=plant.slug) }}">
+                            {{ plant.name }}
+                          </a></td>
+                        <td>{{ plant.species }}</td>
+                        <td>{{ plant.genus.name }}</td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+
+                </div>
+
+              </div>
+            </div><!-- End Top Selling -->
+
+          </div>
+        </div><!-- End Left side columns -->
+
+
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+
+  {% include 'components/admin/footer.html' %}
+
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+
+  {% include 'components/admin/scripts.html' %}
+</body>
+
+</html>

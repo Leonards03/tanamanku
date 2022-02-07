@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {% include 'components/admin/header.html' %}
+
+  <!-- =======================================================
+  * Template Name: NiceAdmin - v2.2.0
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+  <title>Tanamanku - User Detail</title>
+</head>
+
+<body>
+
+  {% include 'components/admin/navbar.html' %}
+  {% from 'components/admin/sidebar.html' import sidebar  %}
+  {{ sidebar('user') }}
+  <main id="main" class="main">
+    <div class="pagetitle">
+      <h1>Dashboard</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{{ url_for('admin.user_management') }}">User Management</a></li>
+          <li class="breadcrumb-item"><a href="{{ url_for('admin.user_management') }}">User</a></li>
+          <li class="breadcrumb-item active">Detail</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+    {% include 'components/alert.html' %}
+    <section class="section dashboard">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">User Detail</h5>
+
+
+          <div class="text-center mt-5">
+            <img id="avatar-preview" class="rounded center-block mb-3" src="{{ user.avatar_url }}" alt="profile preview"
+              width="200px">
+          </div>
+
+          <div class="d-flex justify-content-between mt-4">
+            <h1 class="mb-3">{{ user.name }}</h1>
+          </div>
+          <div>
+            <dl class="row">
+              <dt class="col-sm-2">Username</dt>
+              <dd class="col-sm-9">@{{ user.username }}</dd>
+            </dl>
+            <dl class="row">
+              <dt class="col-sm-2">Email</dt>
+              <dd class="col-sm-9">{{ user.email }}</dd>
+            </dl>
+            <dl class="row">
+              <dt class="col-sm-2">Role</dt>
+              <dd class="col-sm-9">{{ user.role.name }}</dd>
+            </dl>
+            <dl class="row">
+              <dt class="col-sm-2">Registered</dt>
+              <dd class="col-sm-9">{{ user.created_at }}</dd>
+            </dl>
+            <dl class="row">
+              <dt class="col-sm-2">Registered</dt>
+              <dd class="col-sm-9">{{ user.updated_at }}</dd>
+            </dl>
+          </div>
+        </div>
+
+
+      </div>
+
+    </section>
+
+  </main><!-- End #main -->
+
+  {% include 'components/admin/footer.html' %}
+
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+
+  {% include 'components/admin/scripts.html' %}
+</body>
+
+</html>

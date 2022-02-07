@@ -1,0 +1,46 @@
+<!-- ======= Header ======= -->
+<header id="header" class="d-flex align-items-center">
+  <nav class="navbar navbar-expand-lg navbar-light py-3 container">
+    <div class="container d-flex justify-content-between">
+      <a href="{{ url_for('base.index') }}" class="logo d-flex align-items-center w-auto">
+        <span class="d-none d-lg-block">
+          <i class="bx bxs-leaf" style="font-size: 24px;"></i>
+          TanamanKu</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <div class="navbar-nav ms-auto">
+          <a class="nav-link" aria-current="page" href="{{ url_for('base.index') }}">Home</a>
+          <a class="nav-link" aria-current="page" href="{{ url_for('base.blogs') }}">Blogs</a>
+          <a class="nav-link" aria-current="page" href="{{ url_for('base.plants') }}">Plants</a>
+          {% if current_user.is_authenticated %}
+          <div class="dropdown ms-1">
+            <a class="nav-link dropdown dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+              <img class="rounded" src="{{ current_user.avatar_url }}" alt="" height="28" width="28">
+            </a>
+            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="{{ url_for('profile.details', username=current_user.username) }}">My
+                Profile</a>
+              <a class="dropdown-item" href="{{ url_for('profile.edit_profile', username=current_user.username) }}">Edit
+                Profile</a>
+              <a class="dropdown-item"
+                href="{{ url_for('profile.change_password', username=current_user.username) }}">Change Password</a>
+
+              <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">Logout</a>
+            </div>
+          </div>
+
+          {% else %}
+          <a class="nav-link" href="{{ url_for('auth.register') }}">Register</a>
+          <a class="nav-link" href="{{ url_for('auth.login') }}">Login</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </nav>
+  <!-- .navbar -->
+</header><!-- End Header -->

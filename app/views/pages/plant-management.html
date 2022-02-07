@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {% include 'components/admin/header.html' %}
+
+  <!-- =======================================================
+  * Template Name: NiceAdmin - v2.2.0
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+  <title>Plant Management - Tanamanku</title>
+</head>
+
+<body>
+
+  {% include 'components/admin/navbar.html' %}
+  {% from 'components/admin/sidebar.html' import sidebar  %}
+  {{ sidebar('plant') }}
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Dashboard</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{{ url_for('admin.plant_management') }}">Plant Management</a></li>
+          <li class="breadcrumb-item active">Plant</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+    {% include 'components/alert.html' %}
+
+    <div class="section dashboard">
+      <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link {{ 'active' if tab == 'plant' }}" id="pills-plant-tab" data-bs-toggle="pill"
+            data-bs-target="#pills-plant" type="button" role="tab" aria-controls="pills-plant"
+            aria-selected="true">Plant</button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link {{ 'active' if tab == 'genus' }}" id="pills-genus-tab" data-bs-toggle="pill"
+            data-bs-target="#pills-genus" type="button" role="tab" aria-controls="pills-genus"
+            aria-selected="false">Genus</button>
+        </li>
+      </ul>
+
+      <div class="tab-content" id="pills-tabContent">
+        <div class="tab-pane fade {{ 'show active' if tab == 'plant' }}" id="pills-plant" role="tabpanel"
+          aria-labelledby="pills-plant-tab">
+          <section class="section">
+            <div class="row">
+              <div class="col-lg-12">
+
+                <div class="card">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <h5 class="card-title">Plants</h5>
+                      <a href="{{ url_for('admin.create_plant') }}" class="btn btn-primary">Create New Plant</a>
+                    </div>
+                    <!-- Table with stripped rows -->
+                    <table class="table datatable">
+                      <thead>
+                        <tr>
+                          <th scope="col">#</th>
+                          <th scope="col">Name</th>
+                          <th scope="col">Species</th>
+                          <th scope="col">Genus</th>
+                          <th scope="col">Created At</th>
+                          <th scope="col">Last Updated</th>
+                          <th scope="col">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for plant in plants %}
+                        <tr>
+                          <th scope="row">{{ loop.index }}</th>
+                          <td>{{ plant.name }}</td>
+                          <td>{{ plant.species }}</td>
+                          <td>{{ plant.genus.name }}</td>
+                          <td>{{ plant.created_at }}</td>
+                          <td>{{ plant.updated_at }}</td>
+                          <td>
+                            <a href="{{ url_for('admin.plant_detail', slug=plant.slug) }}" class="btn btn-info">
+                              <i class="bi bi-info-circle"></i>
+                            </a>
+                            <a href="{{ url_for('admin.edit_plant', slug=plant.slug) }}" class="btn btn-warning">
+                              <i class="bi bi-pen"></i>
+                            </a>
+                            <a href="#" class="btn btn-danger" data-bs-toggle="modal"
+                              data-bs-target="#delete-plant-sheet"
+                              data-bs-action="{{ url_for('admin.delete_plant', slug=plant.slug) }}">
+                              <i class="bi bi-trash"></i>
+                            </a>
+                          </td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                    <!-- End Table with stripped rows -->
+
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </section>
+        </div>
+
+
+        <div class="tab-pane fade {{ 'show active' if tab == 'genus' }}" id="pills-genus" role="tabpanel"
+          aria-labelledby="pills-genus-tab">
+          <section class="section">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <h5 class="card-title">Genus</h5>
+                      <a href="{{ url_for('admin.create_genus') }}" class="btn btn-primary">Create New Genus</a>
+                    </div>
+                    <!-- Table with stripped rows -->
+                    <table class="table datatable">
+                      <thead>
+                        <tr>
+                          <th scope="col">#</th>
+                          <th scope="col">Genus</th>
+                          <th scope="col">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for genus in genuses  %}
+                        <tr>
+                          <th scope="row">{{ loop.index }}</th>
+                          <td>{{ genus.name }}</td>
+                          <td>
+                            <a href="{{ url_for('admin.genus_detail', id=genus.id) }}" class="btn btn-info">
+                              <i class="bi bi-info-circle"></i>
+                            </a>
+                            <a href="{{ url_for('admin.edit_genus', id=genus.id) }}" class="btn btn-warning">
+                              <i class="bi bi-pen"></i>
+                            </a>
+                            <a href="#" class="btn btn-danger" data-bs-toggle="modal"
+                              data-bs-target="#delete-genus-sheet"
+                              data-bs-action="{{ url_for('admin.delete_genus', id=genus.id) }}">
+                              <i class="bi bi-trash"></i>
+                            </a>
+                          </td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                    <!-- End Table with stripped rows -->
+
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+
+
+  </main><!-- End #main -->
+
+  {% include 'components/admin/footer.html' %}
+
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+
+  {% include 'components/admin/scripts.html' %}
+  {% include 'components/admin/delete-plant-modal.html' %}
+  {% include 'components/admin/delete-genus-modal.html' %}
+</body>
+
+</html>

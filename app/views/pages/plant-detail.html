@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {% include 'components/admin/header.html' %}
+
+  <!-- =======================================================
+  * Template Name: NiceAdmin - v2.2.0
+  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+  <title>Tanamanku - {{ operation }} Plant</title>
+</head>
+
+<body>
+
+  {% include 'components/admin/navbar.html' %}
+  {% from 'components/admin/sidebar.html' import sidebar  %}
+  {{ sidebar('plant') }}
+  <main id="main" class="main">
+    <div class="pagetitle">
+      <h1>Dashboard</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{{ url_for('admin.plant_management') }}">Plant Management</a></li>
+          <li class="breadcrumb-item"><a href="{{ url_for('admin.plant_management') }}">Plant</a></li>
+          <li class="breadcrumb-item active">Detail</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+    {% include 'components/alert.html' %}
+    <section class="section dashboard">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Plant Detail</h5>
+
+          <div class="text-center">
+            <img id="plant-preview" class="rounded center-block mb-5 w-50"
+              src=" {{ url_for('static', filename='uploads/' + plant.picture_url ) if plant.picture_url }}"
+              alt="Plant Image Preview">
+          </div>
+
+          <div class="d-flex justify-content-between mt-4">
+            <h1 class="mb-3">{{ plant.name }}</h1>
+          </div>
+          <div>
+            <dl class="row">
+              <dt class="col-sm-2">Description</dt>
+              <dd class="col-sm-9">{{ plant.description | safe }}</dd>
+
+              <dt class="col-sm-2">Species</dt>
+              <dd class="col-sm-9">
+                <p><i>{{ plant.species }}</i></p>
+              </dd>
+
+              <dt class="col-sm-2">Genus</dt>
+              <dd class="col-sm-9">
+                <p><i>{{ plant.genus.name }}</i></p>
+              </dd>
+            </dl>
+          </div>
+        </div>
+
+
+      </div>
+
+    </section>
+
+  </main><!-- End #main -->
+
+  {% include 'components/admin/footer.html' %}
+
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+
+  {% include 'components/admin/scripts.html' %}
+
+  <script defer>
+    document.addEventListener('DOMContentLoaded', function () {
+      var plantImage = document.getElementById('plantImage');
+      var plantPreview = document.getElementById('plant-preview');
+      plantImage.onchange = function (event) {
+        const [file] = plantImage.files
+        if (file) {
+          plantPreview.src = URL.createObjectURL(file);
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

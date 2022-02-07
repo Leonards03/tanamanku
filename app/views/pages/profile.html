@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {% include 'components/client/header.html' %}
+  <title>Tanamanku - Index</title>
+
+  <!-- =======================================================
+  * Template Name: Green - v4.7.0
+  * Template URL: https://bootstrapmade.com/green-free-one-page-bootstrap-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+  {% include 'components/client/navbar.html' %}
+
+
+  <main class="container py-3 px-3" id="main">
+
+    {% block body %}
+
+    <div class="text-center mt-5">
+      <img id="avatar-preview" class="rounded center-block mb-3" src="{{ user.avatar_url }}" alt="profile preview">
+      <h1 class="display-6"><a href="{{ url_for('profile.details', username=user.username) }}"
+          class="text-decoration-none">{{ user.username }}</a></h1>
+      <p>Joined on {{ user.created_at }}</p>
+    </div>
+    {% endblock body %}
+
+  </main>
+
+
+  {% include 'components/client/footer.html' %}
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+
+  {% include 'components/client/scripts.html' %}
+</body>
+
+</html>

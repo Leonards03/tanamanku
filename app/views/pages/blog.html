@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {% include 'components/client/header.html' %}
+  <title>Tanamanku - Blog</title>
+
+  <!-- =======================================================
+  * Template Name: Green - v4.7.0
+  * Template URL: https://bootstrapmade.com/green-free-one-page-bootstrap-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body>
+  {% include 'components/client/navbar.html' %}
+
+  <main id="main my-5">
+
+    <div class="container mt-5 mb-5">
+      <div class="card px-4 pt-4 pb-5">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item" aria-current="page">
+              <a href="{{ url_for('base.blogs') }}">Blog</a>
+            </li>
+            <li class="breadcrumb-item" aria-current="page">{{ blog.title }}</li>
+          </ol>
+        </nav>
+        <div class="d-flex justify-content-between mt-4">
+          <h1>{{ blog.title }}</h1>
+        </div>
+
+        <div class="d-flex flex-column mb-5">
+          <small>Posted on {{ blog.get_created_at() }}
+            {% if blog.tag != None  %}
+            {{ '·' }}
+            {% set tags = blog.tag.split(',')  %}
+            {% for tag in tags %}
+            <span class="badge bg-secondary">{{ tag }}</span>
+            {% endfor %}
+            {% endif %}
+          </small>
+        </div>
+        <div>
+          {{ blog.content | safe }}
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+  </main><!-- End #main -->
+
+  {% include 'components/client/footer.html' %}
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+
+  {% include 'components/client/scripts.html' %}
+</body>
+
+</html>
